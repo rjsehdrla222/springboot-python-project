@@ -11,5 +11,6 @@ public interface CommentRepository {
     List<Comment> commentList();
     void commentInsert(Comment comment);
     List<Comment> commentDetail(Long id);
+    void commentDelete(Long id);
 
 }

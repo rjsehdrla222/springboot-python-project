@@ -25,4 +25,5 @@ public class CommentService {
         return commentRepository.commentDetail(id);
     }
 
+    public void commentDelete(Long id) { commentRepository.commentDelete(id); }
 }

@@ -15,4 +15,8 @@
         VALUES (#{title}, #{name}, #{comment}, #{login_id}, 0)
     </insert>
 
+    <delete id="commentDelete" parameterType="Long">
+        DELETE FROM comment WHERE id = #{id};
+    </delete>
+
 </mapper>

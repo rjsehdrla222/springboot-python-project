@@ -7,9 +7,7 @@ import com.induk.python.pythoninweb.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -62,9 +60,16 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "/index";
+    @PostMapping("/commentUpdate/{id}")
+    public String commentUpdate(@PathVariable Long id) {
+
+        return "/commentUpdate";
+    }
+
+    @PostMapping("commentDelete/{id}")
+    public String commentDelete(@PathVariable Long id) {
+        commentService.commentDelete(id);
+        return "redirect:/";
     }
 
     @PostMapping("/login")
