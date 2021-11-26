@@ -17,6 +17,10 @@ public class MemberService {
         return memberRepository.memberJoinCheck(member);
     }
 
+    public String memberNameCheck(String id) {
+        return memberRepository.memberNameCheck(id);
+    }
+
     public String memberTrueCheck(Member member) {
         return memberRepository.memberTrueCheck(member);
     }
@@ -24,4 +28,7 @@ public class MemberService {
     public void memberJoinInsert(Member member) {
         memberRepository.memberJoinInsert(member);
     }
+
+    public Member memberSelect(String login_id) { return memberRepository.memberSelect(login_id); }
+
 }

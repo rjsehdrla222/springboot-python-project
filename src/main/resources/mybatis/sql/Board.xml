@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.induk.python.pythoninweb.repository.BoardRepository">
+    <select id="boardList" parameterType="com.induk.python.pythoninweb.domain.Board" resultType="com.induk.python.pythoninweb.domain.Board">
+        SELECT * FROM free_note ORDER BY id DESC;
+    </select>
+
+    <select id="boardDetail" parameterType="Long" resultType="com.induk.python.pythoninweb.domain.Board">
+        SELECT * FROM free_note WHERE id = #{id};
+    </select>
+
+    <insert id="boardInsert" parameterType="com.induk.python.pythoninweb.domain.Board">
+        INSERT INTO free_note (title, name, contents, login_Id, view_cnt)
+        VALUES (#{title}, #{name}, #{contents}, #{login_id}, 0)
+    </insert>
+
+    <update id="boardUpdate" parameterType="com.induk.python.pythoninweb.domain.Board">
+        UPDATE free_note SET title = #{title}, contents = #{contents}
+        WHERE id = #{id} AND login_id = #{login_id};
+    </update>
+
+    <delete id="boardDelete" parameterType="Long">
+        DELETE FROM free_note WHERE id = #{id};
+    </delete>
+
+    <update id="viewCnt" parameterType="Long">
+        UPDATE free_note set view_cnt = view_cnt + 1 where id = #{id};
+    </update>
+</mapper>

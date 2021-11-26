@@ -11,5 +11,7 @@ public interface MemberRepository {
     String memberJoinCheck(Member member);
     void memberJoinInsert(Member member);
     String memberTrueCheck(Member member);
+    String memberNameCheck(String id);
+    Member memberSelect(String login_id);
 
 }

@@ -3,15 +3,24 @@
 
 <mapper namespace="com.induk.python.pythoninweb.repository.MemberRepository">
     <select id="memberJoinCheck" parameterType="com.induk.python.pythoninweb.domain.Member" resultType="String">
-        SELECT * FROM member WHERE loginId = #{login_id};
+        SELECT * FROM member WHERE login_Id = #{login_id};
     </select>
 
     <select id="memberTrueCheck" parameterType="com.induk.python.pythoninweb.domain.Member" resultType="String">
-        SELECT * FROM member WHERE loginId = #{login_id} and pw = #{pw};
+        SELECT * FROM member WHERE login_Id = #{login_id} and pw = #{pw};
     </select>
 
     <insert id="memberJoinInsert" parameterType="com.induk.python.pythoninweb.domain.Member">
-        INSERT INTO member (loginId, pw, name)
+        INSERT INTO member (login_Id, pw, name)
         VALUES (#{login_id}, #{pw}, #{name});
     </insert>
+
+    <select id="memberNameCheck" parameterType="String" resultType="String">
+        SELECT name FROM member WHERE login_Id = #{login_id};
+    </select>
+
+    <select id="memberSelect" parameterType="String" resultType="com.induk.python.pythoninweb.domain.Member">
+        SELECT * FROM member WHERE login_Id = #{login_id};
+    </select>
+
 </mapper>
