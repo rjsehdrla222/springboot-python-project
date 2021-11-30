@@ -3,6 +3,7 @@ package com.induk.python.pythoninweb.controller;
 import com.induk.python.pythoninweb.domain.Board;
 import com.induk.python.pythoninweb.domain.Member;
 import com.induk.python.pythoninweb.service.BoardService;
+import com.induk.python.pythoninweb.service.CommentService;
 import com.induk.python.pythoninweb.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ public class BoardController {
 
     private final MemberService memberService;
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/notice")
     public String notice() {
@@ -51,8 +53,6 @@ public class BoardController {
         board.setLogin_id(login_id);
         board.setContents(request.getParameter("contents"));
         board.setName(name);
-        String con =request.getParameter("contents");
-        System.out.println(con);
         boardService.boardInsert(board);
         return "redirect:/freeboard";
     }
@@ -75,6 +75,7 @@ public class BoardController {
     @GetMapping("/view/{id}")
     public String boardView(@PathVariable Long id, Model model) {
         model.addAttribute("board", boardService.boardDetail(id));
+        model.addAttribute("comment", commentService.commentList(id));
         return "/view";
     }
 
