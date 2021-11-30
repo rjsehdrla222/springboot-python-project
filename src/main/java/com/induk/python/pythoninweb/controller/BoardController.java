@@ -1,7 +1,6 @@
 package com.induk.python.pythoninweb.controller;
 
 import com.induk.python.pythoninweb.domain.Board;
-import com.induk.python.pythoninweb.domain.Member;
 import com.induk.python.pythoninweb.service.BoardService;
 import com.induk.python.pythoninweb.service.CommentService;
 import com.induk.python.pythoninweb.service.MemberService;
@@ -14,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -29,34 +31,51 @@ public class BoardController {
         return "/notice";
     }
 
-    @GetMapping("/board1")
-    public String freeboard(Model model) {
-        int category = 1;
-        List notice = boardService.boardNoticeList();
-        List free_board = boardService.boardFreeList(category);
-        model.addAttribute("free_board", free_board);
-        model.addAttribute("notice", notice);
-        return "/free-notice-board";
-    }
+    @GetMapping(value = { "/board{i}", "/board{i}/page={num}"})
+    public String freeboard(Model model, @PathVariable(required = false) Integer num, @PathVariable int i) {
+        if (num == null) {
+            num = 0;
+        } else {
+            num = (num - 1) * 5;
+        }
+        System.out.println(num);
+        int category = i;
+        /**
+         * 페이징 위해 원하는 페이지와 카테고리를 맵에 넣어서 전달하고 값을 받아옴.
+         * 이 결과는 원하는 페이지에 작성되었을 내용들을 가져오는 작업.
+         */
+        Map<String, Integer> map = new HashMap<>();
+        map.put("num", num);
+        map.put("category", category);
+        List paging = boardService.boardListList(map);
 
-    @GetMapping("/board2")
-    public String checkBoard(Model model) {
-        int category = 2;
-        List notice = boardService.boardNoticeList();
-        List free_board = boardService.boardFreeList(category);
-        model.addAttribute("free_board", free_board);
-        model.addAttribute("notice", notice);
-        return "/checks";
-    }
+        /**
+         * 페이지의 숫자를 총 몇개 만들어낼것인지에 대한 작업
+         */
+        int total = boardService.boardCount(category);
+        int count = (total / 5) + 1; // 카테고리에 맞는 등록된 글의 총합을 토대로 몇 페이지가 존재하는지.
 
-    @GetMapping("/board3")
-    public String questionsBoard(Model model) {
-        int category = 3;
         List notice = boardService.boardNoticeList();
-        List free_board = boardService.boardFreeList(category);
-        model.addAttribute("free_board", free_board);
-        model.addAttribute("notice", notice);
-        return "/questions";
+
+        if (i == 1) {
+            model.addAttribute("pageCount", count);
+            model.addAttribute("free_board", paging);
+            model.addAttribute("notice", notice);
+            return "/free-notice-board";
+        } else if (i == 2) {
+            List free_board = boardService.boardFreeList(category);
+            model.addAttribute("free_board", paging);
+            model.addAttribute("notice", notice);
+            return "/checks";
+        } else if (i == 3){
+            List free_board = boardService.boardFreeList(category);
+            model.addAttribute("free_board", paging);
+            model.addAttribute("notice", notice);
+            return "/questions";
+        } else {
+            model.addAttribute("errors", "잘못된 접근입니다.");
+            return "/errors";
+        }
     }
 
     @GetMapping("/free-notice-board-write")

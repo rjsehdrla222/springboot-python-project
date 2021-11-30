@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +20,14 @@ public class BoardService {
 
     public List<Board> boardFreeList(int category) {
         return boardRepository.boardFreeList(category);
+    }
+
+    public int boardCount(int category) {
+        return boardRepository.boardCount(category);
+    }
+
+    public List boardListList(Map paging) {
+        return boardRepository.boardListList(paging);
     }
 
     public void boardInsert(Board board) {

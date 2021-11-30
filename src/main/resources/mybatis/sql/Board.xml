@@ -2,18 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.induk.python.pythoninweb.repository.BoardRepository">
-    <select id="boardNoticeList" parameterType="com.induk.python.pythoninweb.domain.Board" resultType="com.induk.python.pythoninweb.domain.Board">
-        SELECT * FROM free_note WHERE category = 9 ORDER BY id DESC;
+    <select id="boardListList" parameterType="Map" resultType="com.induk.python.pythoninweb.domain.Board">
+        SELECT * FROM free_note WHERE category = #{category} ORDER BY id DESC LIMIT #{num}, 5;
+    </select>
+
+    <select id="boardNoticeList" parameterType="com.induk.python.pythoninweb.domain.Board"
+            resultType="com.induk.python.pythoninweb.domain.Board">
+        SELECT *
+        FROM free_note
+        WHERE category = 9
+        ORDER BY id DESC;
     </select>
 
     <select id="boardFreeList" parameterType="int" resultType="com.induk.python.pythoninweb.domain.Board">
-        SELECT * FROM free_note WHERE category = #{category} ORDER BY id DESC;
+        SELECT *
+        FROM free_note
+        WHERE category = #{category}
+        ORDER BY id DESC;
     </select>
 
     <select id="boardDetail" parameterType="Long" resultType="com.induk.python.pythoninweb.domain.Board">
-        SELECT * FROM free_note WHERE id = #{id};
+        SELECT *
+        FROM free_note
+        WHERE id = #{id};
     </select>
 
+    <select id="boardCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM free_note
+        WHERE category = #{category};
+    </select>
 
     <insert id="boardInsert" parameterType="com.induk.python.pythoninweb.domain.Board">
         INSERT INTO free_note (title, name, contents, login_Id, view_cnt, category)
@@ -21,15 +39,22 @@
     </insert>
 
     <update id="boardUpdate" parameterType="com.induk.python.pythoninweb.domain.Board">
-        UPDATE free_note SET title = #{title}, contents = #{contents}
-        WHERE id = #{id} AND login_id = #{login_id};
+        UPDATE free_note
+        SET title    = #{title},
+            contents = #{contents}
+        WHERE id = #{id}
+          AND login_id = #{login_id};
     </update>
 
     <delete id="boardDelete" parameterType="Long">
-        DELETE FROM free_note WHERE id = #{id};
+        DELETE
+        FROM free_note
+        WHERE id = #{id};
     </delete>
 
     <update id="viewCnt" parameterType="Long">
-        UPDATE free_note set view_cnt = view_cnt + 1 where id = #{id};
+        UPDATE free_note
+        set view_cnt = view_cnt + 1
+        where id = #{id};
     </update>
 </mapper>

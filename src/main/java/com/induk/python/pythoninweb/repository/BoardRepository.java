@@ -4,6 +4,7 @@ import com.induk.python.pythoninweb.domain.Board;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BoardRepository {
@@ -15,5 +16,7 @@ public interface BoardRepository {
     void boardDelete(Long id);
     void boardUpdate(Board board);
     List<Board> boardFreeList(int category);
+    int boardCount(int category);
 
+    List<Board> boardListList(Map paging);
 }
