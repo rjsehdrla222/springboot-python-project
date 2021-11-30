@@ -8,11 +8,12 @@ import java.util.List;
 @Repository
 public interface BoardRepository {
 
-    List<Board> boardList();
+    List<Board> boardNoticeList();
     void boardInsert(Board board);
     List<Board> boardDetail(Long id);
     void viewCnt(Long id);
     void boardDelete(Long id);
     void boardUpdate(Board board);
+    List<Board> boardFreeList(int category);
 
 }

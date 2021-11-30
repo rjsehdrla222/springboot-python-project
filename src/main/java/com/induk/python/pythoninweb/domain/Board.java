@@ -13,4 +13,5 @@ public class Board {
     private String contents;
     private int view_cnt;
     private Timestamp create_date;
+    private int category;
 }

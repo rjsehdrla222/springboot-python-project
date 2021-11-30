@@ -13,8 +13,12 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public List<Board> boardList() {
-        return boardRepository.boardList();
+    public List<Board> boardNoticeList() {
+        return boardRepository.boardNoticeList();
+    }
+
+    public List<Board> boardFreeList(int category) {
+        return boardRepository.boardFreeList(category);
     }
 
     public void boardInsert(Board board) {

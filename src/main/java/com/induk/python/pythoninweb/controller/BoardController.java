@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
@@ -28,11 +29,34 @@ public class BoardController {
         return "/notice";
     }
 
-    @GetMapping("/freeboard")
+    @GetMapping("/board1")
     public String freeboard(Model model) {
-        List board = boardService.boardList();
-        model.addAttribute("board", board);
-        return "free-notice-board";
+        int category = 1;
+        List notice = boardService.boardNoticeList();
+        List free_board = boardService.boardFreeList(category);
+        model.addAttribute("free_board", free_board);
+        model.addAttribute("notice", notice);
+        return "/free-notice-board";
+    }
+
+    @GetMapping("/board2")
+    public String checkBoard(Model model) {
+        int category = 2;
+        List notice = boardService.boardNoticeList();
+        List free_board = boardService.boardFreeList(category);
+        model.addAttribute("free_board", free_board);
+        model.addAttribute("notice", notice);
+        return "/checks";
+    }
+
+    @GetMapping("/board3")
+    public String questionsBoard(Model model) {
+        int category = 3;
+        List notice = boardService.boardNoticeList();
+        List free_board = boardService.boardFreeList(category);
+        model.addAttribute("free_board", free_board);
+        model.addAttribute("notice", notice);
+        return "/questions";
     }
 
     @GetMapping("/free-notice-board-write")
@@ -52,9 +76,11 @@ public class BoardController {
         board.setTitle(request.getParameter("title"));
         board.setLogin_id(login_id);
         board.setContents(request.getParameter("contents"));
+        board.setCategory(Integer.parseInt(request.getParameter("category")));
         board.setName(name);
         boardService.boardInsert(board);
-        return "redirect:/freeboard";
+
+        return "redirect:/board";
     }
 
     @GetMapping("/debate")
@@ -64,7 +90,7 @@ public class BoardController {
 
     @GetMapping("/questions")
     public String questions() {
-        return "/question";
+        return "/questions";
     }
 
     @GetMapping("/br1")
@@ -80,15 +106,19 @@ public class BoardController {
     }
 
     @PostMapping("/boardInsert")
-    public String boardInsert(HttpServletRequest request) {
+    public String boardInsert(HttpServletRequest request) throws Exception {
         Board board = new Board();
-        String name = memberService.memberNameCheck(request.getParameter("loginId"));
+        String name = memberService.memberNameCheck(request.getParameter("login_id"));
         board.setTitle(request.getParameter("title"));
-        board.setLogin_id(request.getParameter("loginId"));
-        board.setContents(request.getParameter("content"));
+        board.setLogin_id(request.getParameter("login_id"));
+        board.setContents(request.getParameter("contents"));
+        String category = request.getParameter("category");
+        int integerCategory = Integer.parseInt(category);
+        board.setCategory(integerCategory);
         board.setName(name);
         boardService.boardInsert(board);
-        return "redirect:/";
+        String encodedParam = URLEncoder.encode(category, "UTF-8");
+        return "redirect:/board" + encodedParam;
     }
 
     @GetMapping("/boardUpdate/{id}")
@@ -98,20 +128,23 @@ public class BoardController {
     }
 
     @PostMapping("/boardUpdate")
-    public String boardUpdate(HttpServletRequest request) {
+    public String boardUpdate(HttpServletRequest request) throws Exception {
         Board board = new Board();
-        board.setId(Long.parseLong(request.getParameter("board_id")));
+        String board_id = request.getParameter("board_id");
+        board.setId(Long.parseLong(board_id));
         board.setTitle(request.getParameter("title"));
         board.setLogin_id(request.getParameter("login_id"));
         board.setContents(request.getParameter("contents"));
+        board.setCategory(Integer.parseInt(request.getParameter("category")));
         boardService.boardUpdate(board);
-        return "redirect:/freeboard";
+        String encodedParam = URLEncoder.encode(board_id, "UTF-8");
+        return "redirect:/view/" + encodedParam;
     }
 
     @PostMapping("boardDelete/{id}")
     public String boardDelete(@PathVariable Long id) {
         boardService.boardDelete(id);
-        return "redirect:/freeboard";
+        return "redirect:/board1";
     }
 
 }
