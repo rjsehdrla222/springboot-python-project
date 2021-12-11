@@ -36,12 +36,12 @@ public class ApiController {
 
         /** 여기 고쳐야 **/
         /* set 방식에서 쓰임 */
-        Map<String, Object> abcd = apisApiService.getData();
-        Map<String, String> req = new HashMap<>();
+        Map<String, Double> abcd = apisApiService.getData();
+        Map<String, Double> req = new HashMap<>();
         Iterator<String> iter = abcd.keySet().iterator();
         while (iter.hasNext()) {
             String key = iter.next();
-            String value = (String) abcd.get(key);
+            Double value = abcd.get(key);
             req.put(key, value);
         }
 
