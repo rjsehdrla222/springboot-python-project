@@ -1,5 +1,8 @@
 package com.induk.python.pythoninweb.service;
 
+import com.induk.python.pythoninweb.domain.Board;
+import com.induk.python.pythoninweb.repository.ApiRepository;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,8 +19,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ApisApiService {
 
+    private final ApiRepository apiRepository;
     static int SKY = 0, POP = 0, TMN = 0, PTY = 0, REH = 0, WSD = 0, TMX = 0;
 
     public HashMap<String, Double> getData() throws Exception {
@@ -163,5 +168,14 @@ public class ApisApiService {
         }
         return value;
     }
+
+    public String apiSelectValue() {
+        return apiRepository.apiSelectValue();
+    }
+
+    public void apiUpdateValue(String value) {
+        apiRepository.apiValueUpdate(value);
+    }
+
 
 }
