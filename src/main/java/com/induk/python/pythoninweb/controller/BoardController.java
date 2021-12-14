@@ -38,7 +38,6 @@ public class BoardController {
         } else {
             num = (num - 1) * 5;
         }
-        System.out.println(num);
         int category = i;
         /**
          * 페이징 위해 원하는 페이지와 카테고리를 맵에 넣어서 전달하고 값을 받아옴.
