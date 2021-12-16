@@ -1,12 +1,10 @@
 package com.induk.python.pythoninweb.service;
 
-import com.induk.python.pythoninweb.domain.Board;
 import com.induk.python.pythoninweb.repository.ApiRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -30,7 +28,7 @@ public class ApisApiService {
         //String jsonInString = "";
         HashMap<String, Double> value = new HashMap<>();
         try {
-            HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+            //HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
             //RestTemplate restTemplate = new RestTemplate(factory);
             //HttpHeaders headers = new HttpHeaders();
             //HttpEntity<?> entity = new HttpEntity<>(headers);

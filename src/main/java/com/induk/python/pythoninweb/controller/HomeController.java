@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -22,9 +23,12 @@ public class HomeController {
     private final BoardService boardService;
 
     @GetMapping("/")
-    public String home(HttpSession session, Model model) {
-        log.info("접속 로그");
+    public String home(HttpSession session, Model model, HttpServletRequest request) {
         String name = String.valueOf(session.getAttribute("member"));
+        String connectIp = request.getRemoteAddr();
+        if (!connectIp.equals("0:0:0:0:0:0:0:1")) {
+            log.info("요청 IP: {}", connectIp);
+        }
         Member memberInfo = memberService.memberSelect(name);
         model.addAttribute("board1", boardService.boardFreeList(1));
         model.addAttribute("board2", boardService.boardFreeList(2));

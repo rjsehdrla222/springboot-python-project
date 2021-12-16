@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -24,6 +23,7 @@ public class ApiController {
 
     private final ApisApiService apisApiService;
 
+    //@GetMapping("/apiGetter")
     @Scheduled(cron = "0 01 14 * * *")
     public void customerInput(/*@Valid @RequestBody Member member*/) throws Exception {
 

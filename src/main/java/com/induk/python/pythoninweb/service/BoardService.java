@@ -2,6 +2,7 @@ package com.induk.python.pythoninweb.service;
 
 import com.induk.python.pythoninweb.domain.Board;
 import com.induk.python.pythoninweb.repository.BoardRepository;
+import com.mysql.jdbc.MysqlDataTruncation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

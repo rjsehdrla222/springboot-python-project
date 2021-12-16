@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class BoardController {
         return "/notice";
     }
 
-    @GetMapping(value = { "/board{i}", "/board{i}/page={num}"})
+    @GetMapping(value = {"/board{i}", "/board{i}/page={num}"})
     public String freeboard(Model model, @PathVariable(required = false) Integer num, @PathVariable int i) {
         if (num == null) {
             num = 0;
@@ -62,12 +61,10 @@ public class BoardController {
             model.addAttribute("notice", notice);
             return "/free-notice-board";
         } else if (i == 2) {
-            List free_board = boardService.boardFreeList(category);
             model.addAttribute("free_board", paging);
             model.addAttribute("notice", notice);
             return "/checks";
-        } else if (i == 3){
-            List free_board = boardService.boardFreeList(category);
+        } else if (i == 3) {
             model.addAttribute("free_board", paging);
             model.addAttribute("notice", notice);
             return "/questions";
@@ -85,19 +82,16 @@ public class BoardController {
     }
 
     @PostMapping("/free-notice-board-write")
-    public String freeboardWrite(HttpServletRequest request) {
+    public String freeboardWriteInsert(HttpServletRequest request, Model model) {
         Board board = new Board();
-
         String login_id = request.getParameter("login_id");
         String name = memberService.memberNameCheck(login_id);
-
         board.setTitle(request.getParameter("title"));
         board.setLogin_id(login_id);
         board.setContents(request.getParameter("contents"));
         board.setCategory(Integer.parseInt(request.getParameter("category")));
         board.setName(name);
         boardService.boardInsert(board);
-
         return "redirect:/board";
     }
 
